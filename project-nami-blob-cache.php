@@ -251,7 +251,8 @@ class PN_BlobCache {
 				//De ser así, reviso solamente si todo antes del WildCard corresponde a mi 
 				// url actual.
                                 $exclusion = $exclusion ['host'] . substr($exclusion ['path'],0,strlen($exclusion ['path'])-1);
-				if (strpos(trailingslashit($current_page_url), trailingslashit($exclusion) ) !== false) 
+				if (strpos(trailingslashit($current_page_url), trailingslashit($exclusion) ) !== false 
+				&& strlen($current_page_url)>strlen($exclusion)) 
 				{
     					return true;
 				}
