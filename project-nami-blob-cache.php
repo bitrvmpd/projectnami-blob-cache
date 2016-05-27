@@ -246,6 +246,21 @@ class PN_BlobCache {
 			$exclusion = trim( $exclusion );
 			$exclusion = parse_url( $exclusion );
 
+			// Compara si el último caracter del PATH es un wildcard
+			if($exclusion[ 'path' ][strlen($exclusion[ 'path' ])-1] === "*") {
+				//De ser así, reviso solamente si todo antes del WildCard corresponde a mi 
+				// url actual.
+                                $exclusion = $exclusion ['host'] . substr($exclusion ['path'],0,strlen($exclusion ['path'])-1);
+				if (strpos(trailingslashit($current_page_url), trailingslashit($exclusion) ) !== false) 
+				{
+    					return true;
+				}
+				else				
+				{					
+					return false;
+				}
+			}	
+			//Si no posee un wildcard al final, procede con la comparación de mas abajo.
 			// Constructs the comparison url omitting the scheme and any query strings.
 			$exclusion = $exclusion[ 'host' ] . $exclusion[ 'path' ];
 
